@@ -6,9 +6,6 @@ export type CarrinhoDocument = HydratedDocument<Carrinho>;
 @Schema()
 export class Carrinho {
   @Prop({type: String, required: true})
-  id: string;
-
-  @Prop({type: String, required: true})
   nome: string;
 
   @Prop({type: Number, required: true, min: 0.1})
