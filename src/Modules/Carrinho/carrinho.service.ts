@@ -14,10 +14,20 @@ export class CarrinhoService {
   async listarItensDoCarrinho(): Promise<Array<CarrinhoDocument>> {
    return await this.carrinhoModel.find()
   }
-  async deletaItemDoCarrinho(_id: string): Promise<boolean> {
-   const itemDeletado = await this.carrinhoModel.deleteOne({_id})
+  async finalizarCompra(): Promise<any> {
+    const itensDoCarrinho = await this.carrinhoModel.find()
+    const a = itensDoCarrinho.reduce((a) => {
+      console.log(a)
+      return a
+    })
+  //  const valorTotal = 
+   const compraFinalizada = {
+    
+   }
 
-   console.log({itemDeletado})
+  }
+  async deletaItemDoCarrinho(nome: string): Promise<boolean> {
+   const itemDeletado = await this.carrinhoModel.deleteOne({nome})
 
    return itemDeletado.deletedCount === 1
   }

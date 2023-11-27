@@ -36,16 +36,33 @@ export class CarrinhoController {
     return itensDoCarrinho
   }
 
-  @ApiOperation({ summary: 'Exclui um item do carrinho.', parameters: [{name: '_id', in: 'path'}] })
-  @Delete(':_id')
+  @ApiOperation({ summary: 'Exclui um item do carrinho.', parameters: [{name: 'nome', in: 'path'}] })
+  @Delete(':nome')
   @ApiResponse({
     status: HttpStatus.NO_CONTENT,
     description: 'Item excluído.',
     type: Carrinho,
   })
-  async deletaItemDoCarrinho(@Param('_id') _id): Promise<boolean> {  
-    console.log({_id})
-    const itensDoCarrinho = await this.carrinhoService.deletaItemDoCarrinho(_id);
-    return itensDoCarrinho
+  async deletaItemDoCarrinho(@Res() response, @Param('nome') nome): Promise<boolean> {  
+
+    const itensDoCarrinho = await this.carrinhoService.deletaItemDoCarrinho(nome);
+    return response.status(HttpStatus.NO_CONTENT).json(itensDoCarrinho)
+  }
+
+  @ApiOperation({ summary: 'Finalizar compra' })
+  @ApiProperty({})
+  @ApiResponse({
+    status: HttpStatus.CREATED,
+    description: 'Item adicionado.',
+    type: Carrinho,
+  })
+  @Post()
+  async finalizarCompra(@Res() response): Promise<any> {
+    const compraFinalizada = await this.carrinhoService.finalizarCompra();
+    return response.status(HttpStatus.CREATED).json(compraFinalizada)
+  }
+  @Get('healthCheck')
+  async healthCheck() {
+    return {ok: true}
   }
 }
