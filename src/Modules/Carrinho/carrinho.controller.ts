@@ -56,10 +56,10 @@ export class CarrinhoController {
     description: 'Item adicionado.',
     type: Carrinho,
   })
-  @Post()
+  @Post('finalizar-compora')
   async finalizarCompra(@Res() response): Promise<any> {
     const compraFinalizada = await this.carrinhoService.finalizarCompra();
-    return response.status(HttpStatus.CREATED).json(compraFinalizada)
+    return response.status(HttpStatus.OK).json(compraFinalizada)
   }
   @Get('healthCheck')
   async healthCheck() {
